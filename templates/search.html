@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+  <h1>Search posts</h1>
+  <form method="post" action="{{ url_for('search') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Term <input type="text" name="term" value="{{ term }}"></label>
+    <button type="submit">Search</button>
+  </form>
+  {% if request.method == 'POST' %}
+    <h2>Results for "{{ term }}"</h2>
+    {% for row in rows %}
+      <p>{{ row.content }} <small>— {{ row.created_at }}</small></p>
+    {% else %}
+      <p>No matches.</p>
+    {% endfor %}
+  {% endif %}
+{% endblock %}

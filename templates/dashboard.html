@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+  <h1>Dashboard</h1>
+  <h2>Post a message</h2>
+  <form method="post" action="{{ url_for('board_post') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <textarea name="content" maxlength="500" required></textarea>
+    <button type="submit">Post</button>
+  </form>
+  <h2>Your posts</h2>
+  {% for post in posts %}
+    <p>{{ post.content }} <small>— {{ post.created_at }}</small></p>
+  {% else %}
+    <p>No posts yet.</p>
+  {% endfor %}
+{% endblock %}
